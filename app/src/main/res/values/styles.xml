@@ -7,5 +7,42 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+<style name="textview_gallery">
+    <item name="android:layout_alignParentBottom">true</item>
+    <item name="android:layout_alignParentRight">true</item>
+    <item name="android:layout_marginBottom">@dimen/space_186</item>
+    <item name="android:layout_marginRight">@dimen/space_88</item>
+    <item name="android:padding">@dimen/space_8</item>
+</style>
+    <style name="fab_gallery">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginBottom">@dimen/space_176</item>
+        <item name="android:layout_marginRight">@dimen/space_24</item>
+        <item name="android:elevation">@dimen/space_16</item>
+    </style>
+
+    <style name="textvew_camera">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginBottom">@dimen/space_116</item>
+        <item name="android:layout_marginRight">@dimen/space_88</item>
+        <item name="android:padding">@dimen/space_8</item>
+    </style>
+    <style name="fab_camera">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginBottom">@dimen/space_106</item>
+        <item name="android:layout_marginRight">@dimen/space_24</item>
+        <item name="android:elevation">@dimen/space_16</item>
+    </style>
+
+    <style name="fab_main">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginBottom">@dimen/space_32</item>
+        <item name="android:layout_marginRight">@dimen/space_24</item>
+        <item name="android:elevation">@dimen/space_16</item>
+    </style>
 
 </resources>

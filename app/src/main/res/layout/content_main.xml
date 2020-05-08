@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TextView
+            android:id="@+id/tv_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/back_text"
+            style="@style/textview_gallery"
+            android:text="Gallery"
+            android:textColor="@color/whte"
+            android:visibility="invisible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            style="@style/fab_gallery"
+            android:focusable="true"
+            android:visibility="invisible"
+            app:backgroundTint="@color/whte"
+            app:pressedTranslationZ="12dp"
+            android:src="@drawable/ic_collections_black_24dp" />
+
+        <TextView
+            android:id="@+id/tv_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/back_text"
+            style="@style/textvew_camera"
+            android:text="Camera"
+            android:textColor="@color/whte"
+            android:visibility="invisible" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            style="@style/fab_camera"
+            android:focusable="true"
+            android:visibility="invisible"
+            app:backgroundTint="@color/whte"
+            app:pressedTranslationZ="12dp"
+            android:src="@drawable/ic_photo_camera_black_24dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            style="@style/fab_main"
+            android:focusable="true"
+            android:visibility="visible"
+            app:backgroundTint="@color/whte"
+            app:pressedTranslationZ="12dp"
+            android:src="@drawable/ic_add_black_24dp" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
