@@ -1,15 +1,17 @@
 package com.e.fabwithanmation
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.lang.ref.WeakReference
 
@@ -49,7 +51,10 @@ class MainActivity : AppCompatActivity() {
          //fab camera click
         fab_camera?.setOnClickListener(View.OnClickListener {
             Toast.makeText(applicationContext, "Camera", Toast.LENGTH_SHORT).show()
-            CameraActivity.startActivity(WeakReference(this as Activity))
+            val intent = Intent(this,CameraActivity::class.java)
+            startActivityForResult(intent, 1)
+
+           // CameraActivity.startActivity(WeakReference(this as Activity))
         })
 
         //fab main click
@@ -74,6 +79,25 @@ class MainActivity : AppCompatActivity() {
     }
     //endregion
 
+    @SuppressLint("MissingSuperCall")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // 1
+        if (requestCode == 1) {
+            // 2
+            if (resultCode == Activity.RESULT_OK) {
+                // 3
+                val task = data?.getStringExtra("image_URI")
+
+                task?.let {
+
+                    val myUri:Uri = Uri.parse(it)
+                    image_view.setImageURI(myUri)
+                    Log.d("image capture ",task)
+                    Toast.makeText(this, task, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
     companion object {
         fun startActivity(activityWeakReference: WeakReference<Activity>) {
             val intent = Intent(activityWeakReference.get(), MainActivity::class.java)
@@ -81,3 +105,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
+

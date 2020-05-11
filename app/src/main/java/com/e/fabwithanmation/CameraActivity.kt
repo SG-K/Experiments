@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 
+
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -31,7 +32,6 @@ import java.lang.ref.WeakReference
 private const val REQUEST_CODE_PERMISSIONS = 881
 
 private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-
 class CameraActivity : AppCompatActivity(), LifecycleOwner {
 
     private lateinit var viewFinder: TextureView
@@ -112,8 +112,12 @@ class CameraActivity : AppCompatActivity(), LifecycleOwner {
 
                     override fun onImageSaved(file: File) {
                         val msg = "Photo capture succeeded: ${file.absolutePath}"
-                        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                       // Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                         Log.d("CameraX Sample App", msg)
+                        val intent = Intent()
+                        intent.putExtra("image_URI",file.absolutePath)
+                        setResult(Activity.RESULT_OK,intent)
+                        finish()
                     }
                 })
         }
