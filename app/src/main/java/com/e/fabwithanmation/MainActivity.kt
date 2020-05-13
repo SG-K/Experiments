@@ -11,8 +11,10 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import java.io.File
 import java.lang.ref.WeakReference
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +26,9 @@ class MainActivity : AppCompatActivity() {
      var fab_clock: Animation? = null
      var fab_anticlock: Animation? = null
      var isOpen = false
+     val RES_IMAGE = 100
+     val CAMERA_IMAGE = 110
+
     //endregion
 
     //region oncreate
@@ -46,13 +51,20 @@ class MainActivity : AppCompatActivity() {
 
         //fab gallery click
         fab_gallery?.setOnClickListener(View.OnClickListener {
+
+            val pickIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "image/*"
+            }
+            startActivityForResult(pickIntent, RES_IMAGE)
+
             Toast.makeText(applicationContext, "Gallery", Toast.LENGTH_SHORT).show()
         })
          //fab camera click
         fab_camera?.setOnClickListener(View.OnClickListener {
             Toast.makeText(applicationContext, "Camera", Toast.LENGTH_SHORT).show()
             val intent = Intent(this,CameraActivity::class.java)
-            startActivityForResult(intent, 1)
+            startActivityForResult(intent, CAMERA_IMAGE)
 
            // CameraActivity.startActivity(WeakReference(this as Activity))
         })
@@ -81,30 +93,32 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // 1
-        if (requestCode == 1) {
-            // 2
+
+        if (requestCode == CAMERA_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
-                // 3
+
                 val task = data?.getStringExtra("image_URI")
-
                 task?.let {
-
                     val myUri:Uri = Uri.parse(it)
                     image_view.setImageURI(myUri)
-                    Log.d("image capture ",task)
-                    Toast.makeText(this, task, Toast.LENGTH_SHORT).show()
+                    //  Toast.makeText(this, task, Toast.LENGTH_SHORT).show()
                 }
             }
-        }
+        }else  if (requestCode == RES_IMAGE) {
+                if (resultCode == Activity.RESULT_OK) {
+                    if (data?.data != null) {     //Photo from gallery
+                        val imageUri = data.data
+                        Glide.with(this@MainActivity)
+                            .asBitmap()
+                            .skipMemoryCache(true)
+                            .load(imageUri)
+                            .into(image_view)
+                    }
+                }
+                }
+            }
     }
-    companion object {
-        fun startActivity(activityWeakReference: WeakReference<Activity>) {
-            val intent = Intent(activityWeakReference.get(), MainActivity::class.java)
-            activityWeakReference.get()?.startActivity(intent)
-        }
-    }
-}
+
 
 
 

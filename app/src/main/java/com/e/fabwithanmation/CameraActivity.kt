@@ -58,7 +58,7 @@ class CameraActivity : AppCompatActivity(), LifecycleOwner {
         }
     }
 
-
+  //region To start the camera
     private fun startCamera() {
         // Create configuration object for the viewfinder use case
         val previewConfig = PreviewConfig.Builder().apply {
@@ -135,6 +135,7 @@ class CameraActivity : AppCompatActivity(), LifecycleOwner {
             setImageReaderMode(
                 ImageAnalysis.ImageReaderMode.ACQUIRE_LATEST_IMAGE
             )
+             //   .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
         }.build()
 
         // Build the image analysis use case and instantiate our analyzer
@@ -204,11 +205,4 @@ class CameraActivity : AppCompatActivity(), LifecycleOwner {
         }
         return true
     }
-    companion object {
-        fun startActivity(activityWeakReference: WeakReference<Activity>) {
-            val intent = Intent(activityWeakReference.get(), CameraActivity::class.java)
-            activityWeakReference.get()?.startActivity(intent)
-        }
-    }
-
 }
