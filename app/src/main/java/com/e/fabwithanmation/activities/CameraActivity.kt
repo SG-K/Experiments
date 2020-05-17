@@ -1,4 +1,4 @@
-package com.e.fabwithanmation
+package com.e.fabwithanmation.activities
 
 
 import android.Manifest
@@ -23,32 +23,35 @@ import androidx.camera.core.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import com.e.fabwithanmation.R
 import kotlinx.android.synthetic.main.activity_camera.*
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-import java.lang.ref.WeakReference
 
 
-private const val REQUEST_CODE_PERMISSIONS = 881
 
-private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 class CameraActivity : AppCompatActivity(), LifecycleOwner {
 
-    private lateinit var viewFinder: TextureView
+    //region variables
+     val REQUEST_CODE_PERMISSIONS = 881
+     val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+     lateinit var viewFinder: TextureView
+     //endregion
 
+    //region oncreate
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
 
         viewFinder = findViewById(R.id.finder_view)
 
-
         // Request camera permissions
         if (allPermissionsGranted()) {
             viewFinder.post { startCamera() }
         } else {
             ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+                this,
+                REQUIRED_PERMISSIONS,
+                REQUEST_CODE_PERMISSIONS
             )
         }
 
@@ -57,8 +60,9 @@ class CameraActivity : AppCompatActivity(), LifecycleOwner {
             updateTransform()
         }
     }
+    //endregion
 
-  //region To start the camera
+    //region To start the camera
     private fun startCamera() {
         // Create configuration object for the viewfinder use case
         val previewConfig = PreviewConfig.Builder().apply {
@@ -143,14 +147,13 @@ class CameraActivity : AppCompatActivity(), LifecycleOwner {
             analyzer = ImageAnalyzer()
         }
 
-
 //        CameraX.bindToLifecycle(this, preview)
 //        CameraX.bindToLifecycle(this, preview, imageCapture)
 
         CameraX.bindToLifecycle(
             this, preview, imageCapture, analyzerUseCase)
     }
-
+//endregion
 
     private fun updateTransform() {
         val matrix = Matrix()

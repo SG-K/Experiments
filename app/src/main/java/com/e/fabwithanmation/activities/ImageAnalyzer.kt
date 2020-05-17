@@ -1,4 +1,4 @@
-package com.e.fabwithanmation
+package com.e.fabwithanmation.activities
 
 import android.util.Log
 import androidx.camera.core.ImageAnalysis
@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit
 class ImageAnalyzer : ImageAnalysis.Analyzer {
 
     private var lastAnalyzedTimestamp = 0L
-
 
     override fun analyze(image: ImageProxy?, rotationDegrees: Int) {
         val currentTimestamp = System.currentTimeMillis()
