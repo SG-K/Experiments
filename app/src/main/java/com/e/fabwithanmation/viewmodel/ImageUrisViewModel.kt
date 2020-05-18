@@ -1,14 +1,9 @@
 package com.e.fabwithanmation.viewmodel
 
-import android.app.Application
 import android.view.animation.Animation
+import androidx.lifecycle.ViewModel
 
-import androidx.lifecycle.AndroidViewModel
-import com.e.fabwithanmation.roomdb.ImageUris
-import com.e.fabwithanmation.roomdb.ImageuriRepository
-
-
-class ImageUrisViewModel (application: Application) : AndroidViewModel(application) {
+class ImageUrisViewModel : ViewModel() {
 
     //region variables
     var fab_open: Animation? = null
@@ -19,14 +14,5 @@ class ImageUrisViewModel (application: Application) : AndroidViewModel(applicati
     val RES_IMAGE = 100
     val CAMERA_IMAGE = 110
    //endregion
-
-    //repository
-    private var repository:ImageuriRepository = ImageuriRepository(application)
-
-    fun getImageUrs() = repository.getImageuris()
-
-    fun setImageUri(imageUri: ImageUris) {
-        repository.setImageuri(imageUri)
-    }
 
 }

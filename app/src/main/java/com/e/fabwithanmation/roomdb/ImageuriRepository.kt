@@ -1,26 +1,26 @@
 package com.e.fabwithanmation.roomdb
 
 import android.app.Application
+import android.content.Context
 import com.e.fabwithanmation.roomdb.ImageUris
 import com.e.fabwithanmation.roomdb.ImageUriDao
 import com.e.fabwithanmation.roomdb.ImageUrisDatabase
+import kotlinx.coroutines.*
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 
-class ImageuriRepository(application: Application) : CoroutineScope{
+class ImageuriRepository(context: Context) : CoroutineScope{
+
+    private val job = SupervisorJob()
 
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
+        get() = job + Dispatchers.Main
 
     private var imageUriDao: ImageUriDao?
 
     init {
-        val db = ImageUrisDatabase.getDatabase(application)
+        val db = ImageUrisDatabase.getDatabase(context)
         imageUriDao = db?.imageUriDao()
     }
 

@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "uris_table")
+@Entity(tableName = "images_table")
 data class ImageUris(
 
     @PrimaryKey(autoGenerate = true)

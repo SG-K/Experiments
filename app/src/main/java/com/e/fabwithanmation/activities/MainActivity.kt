@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.e.fabwithanmation.R
 import com.e.fabwithanmation.adapter.ImagesAdapter
 import com.e.fabwithanmation.roomdb.ImageUris
+import com.e.fabwithanmation.roomdb.ImageuriRepository
 import com.e.fabwithanmation.viewmodel.ImageUrisViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -27,16 +28,23 @@ class MainActivity : AppCompatActivity() {
     var imageUrisViewModel: ImageUrisViewModel? = null
      val imagesAdapter : ImagesAdapter =
          ImagesAdapter(this)
+    //repository
+    private var repository: ImageuriRepository ?= null
+
     //endregion
+
 
     //region oncreate
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //repository intitalzaton
+        repository = ImageuriRepository(this)
+
         //viewmodel intitalzaton
         imageUrisViewModel = ViewModelProviders.of(this).get(ImageUrisViewModel::class.java)
-        imageUrisViewModel?.getImageUrs()?.observe(this,Observer<List<ImageUris>> { this.renderImageUris(it) })
+        repository?.getImageuris()?.observe(this,Observer<List<ImageUris>> { this.renderImageUris(it) })
 
         //Apply animation to fab
         imageUrisViewModel?.fab_close = AnimationUtils.loadAnimation(this, R.anim.fab_close)
@@ -102,8 +110,6 @@ class MainActivity : AppCompatActivity() {
     private  fun recyclerViewSetup(){
         recycler_view.apply {
             layoutManager = GridLayoutManager(this@MainActivity,3)
-            addItemDecoration(DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL))
-            itemAnimator = DefaultItemAnimator()
             adapter = imagesAdapter
         }
     }
@@ -117,8 +123,7 @@ class MainActivity : AppCompatActivity() {
 
                 val task = data?.getStringExtra("image_URI")
                 task?.let {
-                    imageUrisViewModel?.setImageUri(ImageUris(0,it))
-
+                    repository?.setImageuri(ImageUris(0,it))
                 }
             }
         }else  if (requestCode == imageUrisViewModel?.RES_IMAGE) {
@@ -127,16 +132,15 @@ class MainActivity : AppCompatActivity() {
                     if (data?.clipData != null) {
                         val imageUri : ClipData = data.clipData!!
                         for (i in 0..imageUri.itemCount-1) {
-                            imageUrisViewModel?.setImageUri(ImageUris(0,imageUri.getItemAt(i).uri.toString()))
+                            repository?.setImageuri(ImageUris(0,imageUri.getItemAt(i).uri.toString()))
                         }
                     }else  if (data?.data != null) {     //single Photo from gallery
                         val imageUri = data.data
-                            imageUrisViewModel?.setImageUri(ImageUris(0,imageUri.toString()))
+                        repository?.setImageuri(ImageUris(0,imageUri.toString()))
                     }
                 }
                 }
             }
-
 
     //data set to Listadapter
     private fun renderImageUris(uris: List<ImageUris>?){

@@ -21,7 +21,7 @@ abstract class ImageUrisDatabase : RoomDatabase() {
                 synchronized(ImageUrisDatabase::class.java) {
                     if (INSTANCE == null) {
                         INSTANCE = Room.databaseBuilder(
-                            context.applicationContext,
+                            context,
                             ImageUrisDatabase::class.java, "imageuri_database"
                         )
                             .build()
