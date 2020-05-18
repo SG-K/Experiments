@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.e.fabwithanmation.R
 import com.e.fabwithanmation.roomdb.ImageUris
+import kotlinx.android.synthetic.main.list_item.view.*
 
 class ImagesAdapter(val context : Context) :
     ListAdapter<ImageUris, ImagesAdapter.ImagesViewHolder>(
@@ -26,7 +27,6 @@ class ImagesAdapter(val context : Context) :
     }
 
     inner class ImagesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val image_view by lazy { itemView.findViewById<ImageView>(R.id.im_image) }
 
 //        init {
 //            itemView.setOnClickListener {
@@ -36,16 +36,14 @@ class ImagesAdapter(val context : Context) :
 
         fun bind(imageUri: ImageUris) {
             Glide.with(context)
-                .asBitmap()
-                .skipMemoryCache(true)
                 .load(imageUri.imageuri)
-                .into(image_view)
+                .into(itemView.im_image)
         }
     }
 
     class ImageUriDiffUtil : DiffUtil.ItemCallback<ImageUris>() {
         override fun areItemsTheSame(oldItem: ImageUris, newItem: ImageUris): Boolean {
-            return oldItem.imageuri == newItem.imageuri
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: ImageUris, newItem: ImageUris): Boolean {

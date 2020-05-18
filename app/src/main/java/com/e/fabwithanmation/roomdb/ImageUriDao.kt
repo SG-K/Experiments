@@ -17,7 +17,7 @@ interface ImageUriDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setImageUri(image: ImageUris)
 
-    @Query("SELECT * from uris_table ORDER BY id ASC")
+    @Query("SELECT * from images_table ORDER BY id ASC")
     fun getImageUris() : LiveData<List<ImageUris>>
 
 //    @Query("DELETE FROM uris_table")
