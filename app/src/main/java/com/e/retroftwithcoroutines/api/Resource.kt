@@ -2,6 +2,7 @@ package com.e.retroftwithcoroutines.api
 
 /**
  * A generic class that holds a value with its loading status.
+ * Resource class can hold data and network status like loading, success and error
  * @param <T>
 </T> */
 data class Resource<out T>(val status: Status, val data: T?, val msg: String?) {

@@ -8,19 +8,17 @@ import retrofit2.http.GET
 /**
  * @author Munish Chandel
  */
-
+//Retrofit service class
 interface PersonApi {
-
+//	suspend function allows us to run this method inside a coroutine.
     @GET("/api/users/2")
     suspend fun getPerson(): Response<ServiceResponse<Person>>
 }
 
-@Keep
-data class ServiceResponse<T>(
-    @SerializedName("data") val data: T
-)
+//Service response
+data class ServiceResponse<T>(@SerializedName("data") val data: T)
 
-@Keep
+//service response this class have person details
 data class Person(
     @SerializedName("id") val id: Long,
     @SerializedName("email") val email: String,

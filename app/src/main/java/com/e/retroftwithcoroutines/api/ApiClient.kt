@@ -13,19 +13,18 @@ import java.util.concurrent.TimeUnit
 /**
  * @author Munish Chandel
  */
-
+//In this class creating an instance of OkHttpClient and Retrofit client .
 object ApiClient {
 
-    private val okHttpClient by lazy { OkHttpClient() }
+    private val okHttpClient = OkHttpClient()
 
     private val retrofit: Retrofit by lazy {
-        Log.e("AppClient", "Creating Retrofit Client")
+
+           Log.e("AppClient", "Creating Retrofit Client")
         val builder = Retrofit.Builder()
             .baseUrl("https://reqres.in")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-        val dispatcher = Dispatcher()
-        dispatcher.maxRequests = 1
 
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -35,12 +34,12 @@ object ApiClient {
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
-            .dispatcher(dispatcher)
             .build()
         builder.client(client).build()
     }
 
+    //creating instance of service by passing the service class
     fun <T> createService(tClass: Class<T>?): T {
-        return retrofit.create(tClass)
+        return retrofit!!.create(tClass)
     }
 }

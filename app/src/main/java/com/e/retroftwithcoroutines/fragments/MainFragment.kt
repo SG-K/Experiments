@@ -15,17 +15,19 @@ import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : Fragment() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel = MainViewModel()
 
+  //onCreateView wecan assgn and declare view variables
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
-
+//onActivityCreated() to do any final initialisations you want to do once everything has completed.
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        //observing livedata from viewmodel
         viewModel.loadData().observe(this, Observer { networkResource ->
             when (networkResource.status) {
                 Status.LOADING -> {
