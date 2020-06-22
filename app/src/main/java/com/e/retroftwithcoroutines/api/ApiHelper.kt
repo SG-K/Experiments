@@ -1,6 +1,7 @@
 package com.e.retroftwithcoroutines.api
 
 import com.e.retroftwithcoroutines.model.tittleModel
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,13 +23,14 @@ object ApiHelper {
             .client(okHttpClient)
             .baseUrl("https://jsonplaceholder.typicode.com")
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
         this.apiService = retrofit.create(ApiService::class.java)
     }
 
     //service request by using coroutine suspend
     suspend fun getTodoRequest(id: Int): Result<tittleModel> {
-        return safeApiCall(call = { apiService.getTodo(id) })
+        return safeApiCall(call = { apiService.getTodo(id).await()})
     }
 
 

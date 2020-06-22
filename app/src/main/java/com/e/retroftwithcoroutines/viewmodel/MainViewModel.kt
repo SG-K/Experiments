@@ -9,7 +9,6 @@ import com.e.retroftwithcoroutines.model.tittleModel
 import com.e.retroftwithcoroutines.api.Result
 import kotlinx.coroutines.launch
 
-
 //viewmodel class interacting  with the service and fetches the data from network to activity using Kotlin coroutine.
  class MainViewModel : ViewModel() {
 
@@ -27,18 +26,26 @@ import kotlinx.coroutines.launch
 
         //Service calling by launching the coroutine
         fun getTodoFromServer() {
-            loadingMessage.postValue(true)
+
             viewModelScope.launch {
+                loadingMessage.postValue(true)
+
+                try {
                 val retrofitPost = ApiHelper.getTodoRequest(1)
                 when (retrofitPost) {
-                    is Result.Success -> {
-                        loadingMessage.postValue(false)
-                        successPost.postValue(retrofitPost.data)}
-                    is Result.Error -> {
-                        loadingMessage.postValue(false)
-                        errorMessage.postValue(retrofitPost.exception)
+                        is Result.Success -> {
+                            loadingMessage.postValue(false)
+                            successPost.postValue(retrofitPost.data)
+                        }
+                        is Result.Error -> {
+                            loadingMessage.postValue(false)
+                            errorMessage.postValue(retrofitPost.exception)
+                        }
                     }
-                }
+
+            } catch (e: Exception) {
+                    errorMessage.postValue("Something Went Wrong")
+            }
             }
 
         }

@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         //Error response Observer
-        viewModel?.errorMessage?.observe(this, Observer {
+        viewModel.errorMessage.observe(this, Observer {
             Toast.makeText(this,it,Toast.LENGTH_LONG).show()
             Log.d("http","Error msg "+it )
         })
