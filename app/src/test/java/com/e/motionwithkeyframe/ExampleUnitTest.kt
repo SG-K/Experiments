@@ -1,4 +1,4 @@
-package com.e.motionlayoutexample
+package com.e.motionwithkeyframe
 
 import org.junit.Test
 
