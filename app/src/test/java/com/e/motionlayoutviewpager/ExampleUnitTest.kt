@@ -1,4 +1,4 @@
-package com.e.motionwithkeyframe
+package com.e.motionlayoutviewpager
 
 import org.junit.Test
 
